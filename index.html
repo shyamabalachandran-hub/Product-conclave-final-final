@@ -1,0 +1,596 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Product Conclave 2026 — Build the Future</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<style>
+  @font-face { font-family:"TASA Orbiter Display"; src:url("fonts/TASAOrbiterDisplay-Regular.otf") format("opentype"); font-weight:400; font-display:swap; }
+  @font-face { font-family:"TASA Orbiter Display"; src:url("fonts/TASAOrbiterDisplay-Medium.otf") format("opentype"); font-weight:500; font-display:swap; }
+  @font-face { font-family:"TASA Orbiter Display"; src:url("fonts/TASAOrbiterDisplay-SemiBold.otf") format("opentype"); font-weight:600; font-display:swap; }
+  @font-face { font-family:"TASA Orbiter Display"; src:url("fonts/TASAOrbiterDisplay-Bold.otf") format("opentype"); font-weight:700; font-display:swap; }
+  @font-face { font-family:"Inter Tight"; src:url("fonts/InterTight-Regular.ttf") format("truetype"); font-weight:400; font-display:swap; }
+  @font-face { font-family:"Inter Tight"; src:url("fonts/InterTight-Medium.ttf") format("truetype"); font-weight:500; font-display:swap; }
+  @font-face { font-family:"Inter Tight"; src:url("fonts/InterTight-SemiBold.ttf") format("truetype"); font-weight:600; font-display:swap; }
+  @font-face { font-family:"Inter Tight"; src:url("fonts/InterTight-Bold.ttf") format("truetype"); font-weight:700; font-display:swap; }
+
+  :root {
+    --acc:#7DD6FF; --violet:#B8A8FF; --paper:#F5F8FF;
+    --ink-dim:rgba(245,248,255,.62); --ink-faint:rgba(245,248,255,.42);
+    --disp:"TASA Orbiter Display","Inter Tight",sans-serif;
+    --body:"Inter Tight",system-ui,sans-serif;
+    --line:rgba(255,255,255,.12);
+    --glass:rgba(125,214,255,.05);
+    --maxw:1180px;
+  }
+  * { box-sizing:border-box; }
+  html { scroll-behavior:smooth; scroll-padding-top:96px; }
+  body { margin:0; font-family:var(--body); color:var(--paper); background:#02010A; line-height:1.5;
+    -webkit-font-smoothing:antialiased; overflow-x:hidden; }
+  a { color:inherit; text-decoration:none; }
+  img { display:block; max-width:100%; }
+
+  /* ── fixed cosmos backdrop ── */
+  .cosmos { position:fixed; inset:0; z-index:-2; overflow:hidden;
+    background:radial-gradient(120% 90% at 28% 0%, #15093E 0%, #08041F 42%, #02010A 74%, #000003 100%); }
+  .cosmos .orb { position:absolute; border-radius:50%; filter:blur(80px); }
+  .cosmos .o1 { left:-6%; top:8%; width:680px; height:680px; background:radial-gradient(circle, rgba(74,48,216,0.5) 0%, transparent 70%); }
+  .cosmos .o2 { right:-8%; top:30%; width:620px; height:620px; background:radial-gradient(circle, rgba(27,53,145,0.55) 0%, transparent 70%); }
+  .cosmos .o3 { left:24%; top:62%; width:420px; height:420px; background:radial-gradient(circle, rgba(184,168,255,0.22) 0%, transparent 70%); }
+  .cosmos .o4 { right:18%; bottom:2%; width:460px; height:460px; background:radial-gradient(circle, rgba(125,214,255,0.18) 0%, transparent 70%); }
+  #stars { position:fixed; inset:0; z-index:-1; pointer-events:none; }
+  .grain { position:fixed; inset:0; z-index:-1; pointer-events:none; mix-blend-mode:overlay; opacity:.6;
+    background:radial-gradient(circle at 1px 1px, rgba(255,255,255,0.04) 1px, transparent 1.5px); background-size:4px 4px; }
+
+  /* ── nav ── */
+  nav { position:fixed; top:0; left:0; right:0; z-index:50; display:flex; align-items:center; justify-content:space-between;
+    padding:18px 40px; transition:padding .3s ease, background .3s ease, border-color .3s ease;
+    border-bottom:1px solid transparent; }
+  nav.scrolled { padding:12px 40px; background:rgba(6,4,20,.72); backdrop-filter:blur(16px) saturate(150%);
+    -webkit-backdrop-filter:blur(16px) saturate(150%); border-bottom:1px solid var(--line); }
+  nav .brand { display:flex; align-items:center; gap:14px; }
+  nav .brand img { height:26px; }
+  nav .brand .sep { width:1px; height:22px; background:var(--line); }
+  nav .brand .tag { font-family:var(--disp); font-weight:600; font-size:15px; letter-spacing:-0.01em; }
+  nav .brand .tag b { color:var(--acc); font-weight:600; }
+  nav .links { display:flex; align-items:center; gap:6px; }
+  nav .links a { font-size:14px; font-weight:500; color:var(--ink-dim); padding:9px 15px; border-radius:8px;
+    transition:color .2s, background .2s; }
+  nav .links a:hover { color:var(--paper); background:rgba(255,255,255,.06); }
+  nav .links a.active { color:var(--acc); }
+  nav .navtoggle { display:none; background:none; border:1px solid var(--line); border-radius:8px; padding:8px;
+    cursor:pointer; color:var(--paper); }
+
+  .wrap { max-width:var(--maxw); margin:0 auto; padding:0 40px; }
+
+  /* ── hero ── */
+  header.hero { min-height:100vh; display:flex; flex-direction:column; justify-content:center; padding:140px 0 90px; position:relative; }
+  .hero .eyebrow { display:inline-flex; align-items:center; gap:13px; padding:9px 18px; border-radius:999px;
+    background:var(--glass); border:1px solid rgba(125,214,255,.32); width:fit-content;
+    font-size:13px; font-weight:600; letter-spacing:0.22em; text-transform:uppercase; color:var(--acc); }
+  .hero .eyebrow .gd { width:9px; height:9px; border-radius:50%; background:var(--acc); box-shadow:0 0 12px var(--acc); }
+  .hero h1 { font-family:var(--disp); font-weight:700; font-size:clamp(56px,11vw,148px); line-height:0.86;
+    letter-spacing:-0.04em; margin:34px 0 0; text-wrap:balance; }
+  .hero h1 .b { color:var(--acc); }
+  .hero .lead { margin-top:30px; font-size:clamp(18px,2.4vw,25px); font-weight:300; font-style:italic;
+    color:var(--ink-dim); max-width:560px; letter-spacing:-0.005em; }
+  .hero .meta { margin-top:46px; display:flex; flex-wrap:wrap; gap:14px; }
+  .chip { display:inline-flex; align-items:center; gap:12px; padding:15px 22px; border-radius:14px;
+    background:var(--glass); border:1px solid var(--line); }
+  .chip svg { width:21px; height:21px; color:var(--acc); flex:none; }
+  .chip .k { font-size:11px; font-weight:600; letter-spacing:0.18em; text-transform:uppercase; color:var(--ink-faint); }
+  .chip .v { font-size:16px; font-weight:600; margin-top:2px; }
+  .hero .cta { margin-top:46px; display:flex; flex-wrap:wrap; gap:14px; }
+  .btn { display:inline-flex; align-items:center; gap:10px; padding:16px 28px; border-radius:12px; font-family:var(--body);
+    font-size:15px; font-weight:600; cursor:pointer; border:1px solid transparent; transition:transform .15s, box-shadow .2s, background .2s; }
+  .btn:active { transform:translateY(1px); }
+  .btn-primary { background:var(--acc); color:#04121c; box-shadow:0 8px 30px rgba(125,214,255,.28); }
+  .btn-primary:hover { box-shadow:0 12px 40px rgba(125,214,255,.42); }
+  .btn-ghost { background:transparent; color:var(--paper); border-color:rgba(125,214,255,.4); }
+  .btn-ghost:hover { background:rgba(125,214,255,.08); }
+  .btn svg { width:18px; height:18px; }
+
+  /* ── announcement banner ── */
+  .banner { display:flex; align-items:center; gap:18px; padding:18px 26px; border-radius:14px;
+    background:linear-gradient(90deg, rgba(125,214,255,.18), rgba(184,168,255,.08)); border:1px solid rgba(125,214,255,.42);
+    font-size:15.5px; font-weight:500; color:var(--paper); max-width:100%; box-shadow:0 8px 30px rgba(74,48,216,.18); }
+  .banner span:last-child { line-height:1.55; letter-spacing:0.005em; }
+  .banner strong { color:var(--acc); font-weight:700; white-space:nowrap; }
+  .hero .banner { margin-bottom:30px; }
+  .banner .bi { flex:none; width:34px; height:34px; display:grid; place-items:center; border-radius:9px;
+    background:rgba(125,214,255,.16); position:relative; }
+  .banner .bi svg { width:19px; height:19px; color:var(--acc); }
+  .banner .bi::after { content:""; position:absolute; top:-3px; right:-3px; width:9px; height:9px; border-radius:50%;
+    background:var(--acc); box-shadow:0 0 10px var(--acc); animation:pulse 2s ease-in-out infinite; }
+  @keyframes pulse { 0%,100%{ opacity:1; transform:scale(1); } 50%{ opacity:.4; transform:scale(.7); } }
+  @media (prefers-reduced-motion:reduce){ .banner .bi::after{ animation:none; } }
+
+  /* ── countdown (desktop) ── */
+  .countdown { margin:0 0 40px; }
+  .countdown .cd-label { display:flex; align-items:center; gap:11px; font-size:12px; font-weight:600;
+    letter-spacing:0.22em; text-transform:uppercase; color:var(--ink-faint); margin-bottom:14px; }
+  .countdown .cd-label .gd { width:7px; height:7px; border-radius:50%; background:var(--acc); box-shadow:0 0 10px var(--acc); }
+  .cd-units { display:flex; gap:12px; }
+  .cd-u { min-width:90px; padding:16px 12px; border-radius:16px; background:var(--glass); border:1px solid var(--line); text-align:center; }
+  .cd-u .n { font-family:var(--disp); font-weight:700; font-size:42px; line-height:1; letter-spacing:-0.03em;
+    font-variant-numeric:tabular-nums; color:var(--paper); }
+  .cd-u .l { font-size:11px; font-weight:600; letter-spacing:0.16em; text-transform:uppercase; color:var(--ink-faint); margin-top:9px; }
+
+  /* ── section frame ── */
+  section { padding:96px 0; position:relative; }
+  .sec-head { margin-bottom:54px; }
+  .sec-kicker { display:flex; align-items:center; gap:14px; font-size:13px; font-weight:600; letter-spacing:0.26em;
+    text-transform:uppercase; color:var(--acc); margin-bottom:18px; }
+  .sec-kicker .ln { width:42px; height:1.5px; background:linear-gradient(90deg, var(--acc), transparent); }
+  .sec-head h2 { font-family:var(--disp); font-weight:700; font-size:clamp(36px,6vw,68px); line-height:0.94;
+    letter-spacing:-0.03em; margin:0; }
+  .sec-head p { margin:18px 0 0; font-size:18px; color:var(--ink-dim); max-width:620px; }
+
+  /* ── agenda ── */
+  .day-tabs { display:flex; gap:10px; margin-bottom:36px; }
+  .day-tab { padding:13px 24px; border-radius:12px; border:1px solid var(--line); background:transparent; cursor:pointer;
+    font-family:var(--body); color:var(--ink-dim); transition:all .2s; text-align:left; }
+  .day-tab .dt-l { font-family:var(--disp); font-weight:700; font-size:18px; letter-spacing:0.02em; color:var(--paper); }
+  .day-tab .dt-d { font-size:12px; font-weight:500; letter-spacing:0.12em; text-transform:uppercase; color:var(--ink-faint); margin-top:3px; }
+  .day-tab.active { border-color:rgba(125,214,255,.55); background:var(--glass); }
+  .day-tab.active .dt-l { color:var(--acc); }
+
+  .agenda-day { display:none; }
+  .agenda-day.active { display:block; }
+  .ag-row { display:grid; grid-template-columns:172px 1fr; gap:30px; padding:20px 0; border-top:1px solid var(--line);
+    align-items:start; }
+  .ag-row:last-child { border-bottom:1px solid var(--line); }
+  .ag-time { font-family:var(--disp); font-weight:600; font-size:17px; letter-spacing:-0.01em; padding-top:3px; }
+  .ag-time .to { display:block; font-family:var(--body); font-size:13px; font-weight:400; color:var(--ink-faint); margin-top:3px; }
+  .ag-body { min-width:0; }
+  .ag-tag { font-size:11px; font-weight:700; letter-spacing:0.22em; text-transform:uppercase; color:var(--acc); margin-bottom:8px; }
+  .ag-title { font-family:var(--disp); font-weight:600; font-size:24px; letter-spacing:-0.015em; line-height:1.1; text-wrap:balance; }
+  .ag-note { margin-top:7px; font-size:15px; color:var(--ink-dim); }
+  .ag-row.logi .ag-title { font-family:var(--body); font-weight:500; font-size:19px; color:rgba(245,248,255,.86); }
+  .ag-row.logi { padding:16px 0; }
+  .ag-people { margin-top:10px; display:flex; flex-wrap:wrap; gap:7px; }
+  .ag-people .pp { display:inline-flex; align-items:center; gap:8px; padding:5px 11px 5px 5px; border-radius:999px;
+    background:rgba(255,255,255,.045); border:1px solid var(--line); font-size:13px; font-weight:500; color:rgba(245,248,255,.82); }
+  .ag-people .pp img { width:24px; height:24px; border-radius:50%; object-fit:cover; }
+  .ag-people .pp .role { color:var(--ink-faint); font-size:11px; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; }
+
+  /* ── sessions ── */
+  .sessions { display:grid; grid-template-columns:repeat(2,1fr); gap:22px; }
+  .scard { position:relative; border-radius:18px; border:1px solid var(--line); overflow:hidden;
+    background:linear-gradient(180deg, rgba(125,214,255,.055), rgba(255,255,255,.02));
+    padding:30px 30px 28px; transition:transform .2s, border-color .2s, box-shadow .2s; }
+  .scard:hover { transform:translateY(-4px); border-color:rgba(125,214,255,.42); box-shadow:0 24px 60px rgba(74,48,216,.26); }
+  .scard.keynote { grid-column:span 2; background:linear-gradient(120deg, rgba(125,214,255,.12), rgba(184,168,255,.06) 60%, rgba(255,255,255,.02)); }
+  .scard-top { display:flex; align-items:center; justify-content:space-between; margin-bottom:20px; }
+  .scard-tag { display:inline-flex; align-items:center; gap:9px; font-size:12px; font-weight:700; letter-spacing:0.2em;
+    text-transform:uppercase; color:var(--acc); }
+  .scard-tag .st { width:8px; height:8px; border-radius:50%; background:var(--acc); box-shadow:0 0 10px var(--acc); }
+  .scard-time { font-family:var(--disp); font-weight:600; font-size:15px; color:var(--ink-dim); }
+  .scard h3 { font-family:var(--disp); font-weight:600; font-size:27px; line-height:1.06; letter-spacing:-0.02em; margin:0; text-wrap:balance; }
+  .scard .sub { margin-top:10px; font-size:15px; color:var(--ink-dim); }
+  .scard .speakers { margin-top:22px; display:flex; flex-wrap:wrap; gap:16px 22px; }
+  .spk { display:flex; align-items:center; gap:12px; }
+  .spk img { width:52px; height:52px; border-radius:50%; object-fit:cover; border:1.5px solid rgba(125,214,255,.4); }
+  .spk .nm { font-size:15px; font-weight:600; letter-spacing:-0.005em; }
+  .spk .rl { font-size:11px; font-weight:600; letter-spacing:0.14em; text-transform:uppercase; color:var(--acc); margin-top:2px; }
+  .scard.keynote .speakers .spk img { width:64px; height:64px; border-width:2px; }
+
+  /* ── FAQ ── */
+  .faq-groups { display:grid; grid-template-columns:repeat(2,1fr); gap:20px 40px; align-items:start; }
+  .faq-group > .grp-title { display:flex; align-items:center; gap:11px; font-family:var(--disp); font-weight:600;
+    font-size:21px; letter-spacing:-0.01em; margin:0 0 8px; padding-bottom:14px; }
+  .faq-group > .grp-title .ic { width:30px; height:30px; display:grid; place-items:center; border-radius:9px;
+    background:var(--glass); border:1px solid rgba(125,214,255,.3); }
+  .faq-group > .grp-title .ic svg { width:17px; height:17px; color:var(--acc); }
+  .qa { border-top:1px solid var(--line); }
+  .qa button { width:100%; display:flex; align-items:flex-start; justify-content:space-between; gap:16px; text-align:left;
+    background:none; border:0; cursor:pointer; padding:16px 0; font-family:var(--body); color:var(--paper); }
+  .qa .q { font-size:16px; font-weight:600; letter-spacing:-0.005em; }
+  .qa .pm { flex:none; width:22px; height:22px; position:relative; margin-top:1px; }
+  .qa .pm::before, .qa .pm::after { content:""; position:absolute; background:var(--acc); border-radius:2px;
+    transition:transform .25s ease; }
+  .qa .pm::before { left:4px; right:4px; top:10px; height:2px; }
+  .qa .pm::after { top:4px; bottom:4px; left:10px; width:2px; }
+  .qa.open .pm::after { transform:scaleY(0); }
+  .qa .a { max-height:0; overflow:hidden; transition:max-height .3s ease; }
+  .qa .a p { margin:0 0 18px; font-size:15px; color:var(--ink-dim); padding-right:38px; line-height:1.6; }
+
+  /* ── footer ── */
+  footer { padding:70px 0 50px; border-top:1px solid var(--line); margin-top:40px; }
+  .foot-grid { display:flex; align-items:flex-end; justify-content:space-between; gap:30px; flex-wrap:wrap; }
+  footer .big { font-family:var(--disp); font-weight:700; font-size:clamp(34px,6vw,60px); line-height:0.9; letter-spacing:-0.03em; }
+  footer .big .b { color:var(--acc); }
+  footer .fmeta { text-align:right; color:var(--ink-dim); font-size:15px; }
+  footer .fmeta .row { margin-top:8px; }
+  footer .fmeta a { color:var(--acc); font-weight:600; }
+  footer .legal { margin-top:46px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:14px;
+    font-size:13px; color:var(--ink-faint); }
+  footer .legal img { height:22px; opacity:.9; }
+
+  /* reveal animation */
+  @media (prefers-reduced-motion:no-preference) {
+    .reveal { opacity:0; transform:translateY(22px); transition:opacity .7s ease, transform .7s ease; }
+    .reveal.in { opacity:1; transform:none; }
+  }
+
+  /* ── responsive ── */
+  @media (max-width:880px) {
+    .wrap, nav { padding-left:22px; padding-right:22px; }
+    nav .links { position:fixed; inset:64px 14px auto 14px; flex-direction:column; align-items:stretch; gap:4px;
+      background:rgba(8,5,22,.96); backdrop-filter:blur(16px); border:1px solid var(--line); border-radius:14px;
+      padding:10px; transform:translateY(-12px); opacity:0; pointer-events:none; transition:opacity .2s, transform .2s; }
+    nav .links.show { opacity:1; transform:none; pointer-events:auto; }
+    nav .links a { padding:13px 15px; }
+    nav .navtoggle { display:grid; place-items:center; }
+    .sessions { grid-template-columns:1fr; }
+    .scard.keynote { grid-column:span 1; }
+    .faq-groups { grid-template-columns:1fr; gap:8px; }
+    .ag-row { grid-template-columns:104px 1fr; gap:16px; }
+    .ag-time { font-size:15px; }
+    section { padding:70px 0; }
+    .hero .meta .chip { flex:1 1 100%; }
+    .countdown { display:none; }
+    .banner { font-size:14px; padding:15px 18px; gap:14px; }
+  }
+  @media (max-width:520px) {
+    nav .brand .tag { display:none; }
+    nav .brand .sep { display:none; }
+  }
+</style>
+</head>
+<body>
+<template id="__bundler_thumbnail">
+  <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+    <rect width="100" height="100" rx="18" fill="#0A0526"/>
+    <circle cx="74" cy="28" r="30" fill="#4A30D8" opacity="0.5"/>
+    <circle cx="24" cy="74" r="26" fill="#1B3591" opacity="0.6"/>
+    <text x="50" y="46" font-family="sans-serif" font-size="26" font-weight="700" fill="#F5F8FF" text-anchor="middle">PC</text>
+    <text x="50" y="70" font-family="sans-serif" font-size="20" font-weight="700" fill="#7DD6FF" text-anchor="middle">26</text>
+  </svg>
+</template>
+<div class="cosmos"><div class="orb o1"></div><div class="orb o2"></div><div class="orb o3"></div><div class="orb o4"></div></div>
+<svg id="stars" preserveAspectRatio="none"></svg>
+<div class="grain"></div>
+
+<nav id="nav">
+  <a class="brand" href="#top">
+    <img src="assets/rzp-logo-white.svg" alt="Razorpay" />
+    <span class="sep"></span>
+    <span class="tag">Product Conclave <b>2026</b></span>
+  </a>
+  <div class="links" id="navlinks">
+    <a href="#agenda">Agenda</a>
+    <a href="#sessions">Sessions</a>
+    <a href="#faq">FAQs</a>
+    <a href="#contact">Contact</a>
+  </div>
+  <button class="navtoggle" id="navtoggle" aria-label="Menu">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+  </button>
+</nav>
+
+<a id="top"></a>
+<header class="hero">
+  <div class="wrap">
+    <div class="banner">
+      <span class="bi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></svg></span>
+      <span>Please reach the venue by <strong>9:00 AM.</strong> The bus leaves the Arena office at <strong>7:30 AM sharp.</strong></span>
+    </div>
+    <div class="countdown" id="countdown">
+      <div class="cd-label"><span class="gd"></span>Until we roll out</div>
+      <div class="cd-units">
+        <div class="cd-u"><div class="n" id="cd-d">00</div><div class="l">Days</div></div>
+        <div class="cd-u"><div class="n" id="cd-h">00</div><div class="l">Hours</div></div>
+        <div class="cd-u"><div class="n" id="cd-m">00</div><div class="l">Minutes</div></div>
+        <div class="cd-u"><div class="n" id="cd-s">00</div><div class="l">Seconds</div></div>
+      </div>
+    </div>
+    <div class="eyebrow"><span class="gd"></span>Build the Future</div>
+    <h1>Product<br />Conclave <span class="b">2026</span></h1>
+    <p class="lead">A day for the PMs shaping what Razorpay builds next — and the people building it alongside you.</p>
+    <div class="meta">
+      <div class="chip">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16M4 5v14a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1V5M9 3v4M15 3v4"/></svg>
+        <div><div class="k">When</div><div class="v">19–20 June 2026</div></div>
+      </div>
+      <div class="chip">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-5.5-7-11a7 7 0 0 1 14 0c0 5.5-7 11-7 11Z"/><circle cx="12" cy="10" r="2.6"/></svg>
+        <div><div class="k">Where</div><div class="v">Mulberry Shades, Nandi Hills</div></div>
+      </div>
+      <div class="chip">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6v12M16 6v12M3 8h4l2-2M3 16h4l2 2"/><rect x="9" y="6" width="12" height="12" rx="2"/></svg>
+        <div><div class="k">Departure</div><div class="v">7:30 AM · Razorpay Arena</div></div>
+      </div>
+    </div>
+    <div class="cta">
+      <a class="btn btn-primary" href="#agenda">
+        View agenda
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+      <a class="btn btn-ghost" href="#faq">Read the FAQs</a>
+    </div>
+  </div>
+</header>
+
+<main>
+  <!-- AGENDA -->
+  <section id="agenda">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div class="sec-kicker"><span class="ln"></span>The Schedule</div>
+        <h2>Agenda</h2>
+        <p>An intense day of L&amp;D, then a night to unwind. Sessions are mandatory — bring your laptop.</p>
+      </div>
+      <div class="day-tabs reveal">
+        <button class="day-tab active" data-day="0"><div class="dt-l">Day 1</div><div class="dt-d">Fri · 19 June</div></button>
+        <button class="day-tab" data-day="1"><div class="dt-l">Day 2</div><div class="dt-d">Sat · 20 June</div></button>
+      </div>
+      <div class="agenda-day active reveal" data-day="0" id="day0"></div>
+      <div class="agenda-day reveal" data-day="1" id="day1"></div>
+    </div>
+  </section>
+
+  <!-- SESSIONS -->
+  <section id="sessions">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div class="sec-kicker"><span class="ln"></span>What you'll learn</div>
+        <h2>Sessions</h2>
+        <p>Nine sessions across the day — from keynotes on where product is heading to hands-on builds with AI.</p>
+      </div>
+      <div class="sessions" id="sessions-grid"></div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <div class="sec-kicker"><span class="ln"></span>Good to know</div>
+        <h2>FAQs</h2>
+        <p>Everything about travel, stay, food and the day itself. Still stuck? Reach out below.</p>
+      </div>
+      <div class="faq-groups" id="faq-groups"></div>
+    </div>
+  </section>
+</main>
+
+<footer id="contact">
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="big reveal">Let's build<br />the <span class="b">future.</span></div>
+      <div class="fmeta reveal">
+        <div class="row">Friday–Saturday · 19–20 June 2026</div>
+        <div class="row">Mulberry Shades · Nandi Hills</div>
+        <div class="row">Questions? Reach <a href="#">Shyama</a> or <a href="#">Crystal</a></div>
+      </div>
+    </div>
+    <div class="legal">
+      <img src="assets/rzp-logo-white.svg" alt="Razorpay" />
+      <span>Product Conclave 2026 — for PMs who shape the future.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  /* ───── data ───── */
+  const SP = "assets/speakers/";
+  const SPK = {
+    khilan:{img:SP+"khilan.png",name:"Khilan Haria"},
+    vaibhav:{img:SP+"vaibhav-dhir.png",name:"Vaibhav Dhir"},
+    omona:{img:SP+"omona.png",name:"Omona Mitra"},
+    aravinth:{img:SP+"aravinth.png",name:"Aravinth Kumar"},
+    apurva:{img:SP+"apurva.png",name:"Apurva Ankleshwaria"},
+    shubham:{img:SP+"shubham-bisht.png",name:"Shubham Bisht"},
+    naman:{img:SP+"naman.png",name:"Naman Goyal"},
+    atyasha:{img:SP+"atyasha.png",name:"Atyasha Sinha"},
+    shyama:{img:SP+"shyama.png",name:"Shyama Balachandran"},
+    mohit:{img:SP+"mohit.png",name:"Mohit"},
+    pranay:{img:SP+"pranay.png",name:"Pranay Bagrecha"},
+    prabhu:{img:SP+"prabhu.png",name:"Prabhu"},
+    shashank:{img:SP+"shashank.png",name:"Shashank Kumar"}
+  };
+
+  const AGENDA = [
+    [ // Day 1
+      {s:"7:30 AM", e:"", k:"logi", t:"Departure from Razorpay Arena", note:"Breakfast served during the commute"},
+      {s:"9:00 AM", e:"9:30 AM", k:"logi", t:"Registration", note:"Collect your badge at the venue"},
+      {s:"9:30 AM", e:"9:45 AM", k:"logi", t:"Welcome & Opening Remarks"},
+      {s:"10:00 AM", e:"10:30 AM", k:"logi", t:"Engagement Activity", note:"In-house"},
+      {s:"10:30 AM", e:"11:30 AM", k:"s", tag:"Opening Keynote", t:"New Competency Framework", people:["khilan"]},
+      {s:"11:30 AM", e:"12:00 PM", k:"s", tag:"Session 01", t:"Fundamentals of AI", people:["vaibhav"]},
+      {s:"12:00 PM", e:"12:30 PM", k:"s", tag:"Session 02", t:"Agentic Analytics", people:["omona"]},
+      {s:"12:30 PM", e:"1:00 PM", k:"s", tag:"Session 03", t:"Context is King", note:"Set it up right for 100× leverage",
+        people:[["aravinth","Speaker"],["apurva","Demo"],["shubham","Demo"]]},
+      {s:"1:00 PM", e:"2:00 PM", k:"logi", t:"Lunch Break", note:"Recharge and connect with PMs across the org"},
+      {s:"2:15 PM", e:"2:30 PM", k:"logi", t:"Post-Lunch Filler"},
+      {s:"2:30 PM", e:"3:00 PM", k:"s", tag:"Session 04", t:"PM Command Center", people:["naman","atyasha"]},
+      {s:"3:00 PM", e:"3:45 PM", k:"s", tag:"Session 05", t:"AI Specing", people:["atyasha","apurva"]},
+      {s:"3:45 PM", e:"4:15 PM", k:"logi", t:"Tea Break"},
+      {s:"4:15 PM", e:"5:00 PM", k:"s", tag:"Session 06", t:"Observability through AI", people:["shyama","mohit","pranay"]},
+      {s:"5:00 PM", e:"5:30 PM", k:"s", tag:"Session 07", t:"Engineering Excellence & Agentic Engineering", people:["prabhu"]},
+      {s:"5:30 PM", e:"6:15 PM", k:"s", tag:"Closing Keynote", t:"Expectations from the PM Org on AI", people:["shashank"]},
+      {s:"6:15 PM", e:"6:30 PM", k:"logi", t:"Wrapping Up"},
+      {s:"7:30 PM", e:"onwards", k:"logi", t:"Networking & Dinner", note:"Unwind and build connections over drinks and dinner"}
+    ],
+    [ // Day 2
+      {s:"8:30 AM", e:"", k:"logi", t:"Breakfast"},
+      {s:"11:00 AM", e:"", k:"logi", t:"Check-out", note:"We aim to begin the journey back by 11:00 AM"}
+    ]
+  ];
+
+  const SESSIONS = [
+    {kind:"keynote", tag:"Opening Keynote", time:"10:30 AM", title:"New Competency Framework", people:[["khilan",""]]},
+    {tag:"Session 01", time:"11:30 AM", title:"Fundamentals of AI", sub:"20-min talk + 10 mins of Q&A.", people:[["vaibhav",""]]},
+    {tag:"Session 02", time:"12:00 PM", title:"Agentic Analytics", sub:"20-min talk + 10 mins of Q&A.", people:[["omona",""]]},
+    {tag:"Session 03", time:"12:30 PM", title:"Context is King", sub:"Set it up right for 100× leverage.", people:[["aravinth","Speaker"],["apurva","Demo"],["shubham","Demo"]]},
+    {tag:"Session 04", time:"2:30 PM", title:"PM Command Center", people:[["naman",""],["atyasha",""]]},
+    {tag:"Session 05", time:"3:00 PM", title:"AI Specing", sub:"30-min hands-on session.", people:[["atyasha",""],["apurva",""]]},
+    {tag:"Session 06", time:"4:15 PM", title:"Observability through AI", sub:"45-min session.", people:[["shyama",""],["mohit",""],["pranay",""]]},
+    {tag:"Session 07", time:"5:00 PM", title:"Engineering Excellence & Agentic Engineering", people:[["prabhu",""]]},
+    {kind:"keynote", tag:"Closing Keynote", time:"5:30 PM", title:"Expectations from the PM Org on AI", people:[["shashank",""]]}
+  ];
+
+  const ICONS = {
+    bus:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16v8H4zM4 14v3M20 14v3M6 17h.01M18 17h.01"/><path d="M4 10h16"/></svg>',
+    home:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10l8-6 8 6v9a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1z"/><path d="M9 21v-6h6v6"/></svg>',
+    list:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>',
+    food:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 3v7a2 2 0 0 0 2 2v9M8 3v18M4 3v0M16 3c-1.5 0-2.5 2-2.5 5s1 4 2.5 4v9"/></svg>',
+    help:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M9.2 9.5a2.8 2.8 0 0 1 5.3 1c0 1.8-2.5 2.2-2.5 4M12 17h.01"/></svg>'
+  };
+
+  const FAQ = [
+    {icon:"bus", title:"Logistics & travel", qa:[
+      ["Where and when is it?","Mulberry Shades, Nandi Hills — 19th–20th June. It's an overnight offsite."],
+      ["How do I get there?","Buses depart from the Razorpay Arena office at 7:30 AM sharp."],
+      ["Will food be provided?","Yes — lunch, snacks and dinner on the 19th, and breakfast on the 20th."],
+      ["Can I drive myself / come separately?","Yes, but please be on time!"],
+      ["What time do we get back?","We should start by 11:00 AM the next day, after check-out and breakfast."]
+    ]},
+    {icon:"home", title:"Stay & what to pack", qa:[
+      ["Is accommodation provided?","Yes — overnight stay at the venue."],
+      ["What should I bring?","An overnight bag, charger, and your ID/badge."],
+      ["Is there a dress code?","Nope — just normal casual clothes, and something nice for dinner."],
+      ["What's the room-sharing situation?","Rooms will be pre-assigned with minimal room for changes. The hope is we spend minimum time in the rooms anyway."]
+    ]},
+    {icon:"list", title:"Agenda & sessions", qa:[
+      ["What's the agenda?","A full day of AI-focused sessions — competency framework, AI fundamentals, agentic analytics, PM Command Center, AI specing, observability and agentic engineering, plus opening and closing keynotes."],
+      ["Are sessions mandatory?","Yes, 10000%."],
+      ["Do we need laptops?","Yes — most of the day is intense L&D (most of the night will be party)."]
+    ]},
+    {icon:"food", title:"Food & networking", qa:[
+      ["Are meals covered?","Yes — breakfast (commute), lunch, tea and dinner on Day 1, and breakfast on Day 2."],
+      ["Dietary preferences?","Veg and non-veg food will be served, plus drinks post dinner."]
+    ]},
+    {icon:"help", title:"Logistics & help", qa:[
+      ["Who do I contact for issues?","You can reach out to Shyama or Crystal."],
+      ["What about the registration desk?","Registration is 9:00–9:30 AM at the venue; collect your badge there."],
+      ["If I'm leaving the same day, will I get transport?","No — transport is available to and from Arena on the 19th morning (7:30 AM) and the 20th morning only."]
+    ]}
+  ];
+
+  /* ───── render: agenda ───── */
+  const CAL='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16M4 5v14a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1V5M9 3v4M15 3v4"/></svg>';
+  AGENDA.forEach((day, di) => {
+    const host = document.getElementById('day' + di);
+    host.innerHTML = day.map(r => {
+      const time = '<div class="ag-time">' + r.s + (r.e ? '<span class="to">to ' + r.e + '</span>' : '') + '</div>';
+      let people = '';
+      if (r.people) {
+        people = '<div class="ag-people">' + r.people.map(p => {
+          const id = Array.isArray(p) ? p[0] : p, role = Array.isArray(p) ? p[1] : '';
+          const sp = SPK[id];
+          return '<span class="pp"><img src="' + sp.img + '" alt="' + sp.name + '"/>' + sp.name +
+            (role ? ' <span class="role">' + role + '</span>' : '') + '</span>';
+        }).join('') + '</div>';
+      }
+      const body = '<div class="ag-body">' +
+        (r.tag ? '<div class="ag-tag">' + r.tag + '</div>' : '') +
+        '<div class="ag-title">' + r.t + '</div>' +
+        (r.note ? '<div class="ag-note">' + r.note + '</div>' : '') +
+        people + '</div>';
+      return '<div class="ag-row ' + (r.k === 'logi' ? 'logi' : 'session') + '">' + time + body + '</div>';
+    }).join('');
+  });
+  document.querySelectorAll('.day-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      const d = tab.dataset.day;
+      document.querySelectorAll('.day-tab').forEach(t => t.classList.toggle('active', t === tab));
+      document.querySelectorAll('.agenda-day').forEach(p => p.classList.toggle('active', p.dataset.day === d));
+    });
+  });
+
+  /* ───── render: sessions ───── */
+  document.getElementById('sessions-grid').innerHTML = SESSIONS.map(s => {
+    const spk = s.people.map(([id, role]) => {
+      const sp = SPK[id];
+      return '<div class="spk"><img src="' + sp.img + '" alt="' + sp.name + '"/>' +
+        '<div><div class="nm">' + sp.name + '</div>' + (role ? '<div class="rl">' + role + '</div>' : '') + '</div></div>';
+    }).join('');
+    return '<article class="scard ' + (s.kind === 'keynote' ? 'keynote' : '') + '">' +
+      '<div class="scard-top"><div class="scard-tag"><span class="st"></span>' + s.tag + '</div>' +
+        '<div class="scard-time">' + s.time + '</div></div>' +
+      '<h3>' + s.title + '</h3>' +
+      (s.sub ? '<div class="sub">' + s.sub + '</div>' : '') +
+      '<div class="speakers">' + spk + '</div>' +
+    '</article>';
+  }).join('');
+
+  /* ───── render: FAQ ───── */
+  document.getElementById('faq-groups').innerHTML = FAQ.map(g =>
+    '<div class="faq-group"><div class="grp-title"><span class="ic">' + ICONS[g.icon] + '</span>' + g.title + '</div>' +
+      g.qa.map(([q, a]) =>
+        '<div class="qa"><button type="button"><span class="q">' + q + '</span><span class="pm"></span></button>' +
+        '<div class="a"><p>' + a + '</p></div></div>'
+      ).join('') +
+    '</div>'
+  ).join('');
+  document.querySelectorAll('.qa button').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const qa = btn.parentElement, a = qa.querySelector('.a'), open = qa.classList.contains('open');
+      qa.classList.toggle('open', !open);
+      a.style.maxHeight = open ? '0' : a.scrollHeight + 'px';
+    });
+  });
+
+  /* ───── countdown ───── */
+  (function(){
+    const target = new Date('2026-06-19T07:30:00+05:30').getTime();
+    const p = n => String(n).padStart(2,'0');
+    function tick(){
+      let diff = Math.max(0, target - Date.now());
+      const d = Math.floor(diff/86400000); diff -= d*86400000;
+      const h = Math.floor(diff/3600000); diff -= h*3600000;
+      const m = Math.floor(diff/60000); diff -= m*60000;
+      const s = Math.floor(diff/1000);
+      document.getElementById('cd-d').textContent = p(d);
+      document.getElementById('cd-h').textContent = p(h);
+      document.getElementById('cd-m').textContent = p(m);
+      document.getElementById('cd-s').textContent = p(s);
+    }
+    tick(); setInterval(tick, 1000);
+  })();
+
+  /* ───── starfield ───── */
+  (function(){
+    const svg = document.getElementById('stars');
+    let s = 23; const r = () => (s = (s*9301+49297)%233280)/233280;
+    let out = "";
+    for (let i = 0; i < 130; i++) {
+      const sz = (r()<0.85?1.3:r()<0.97?2.1:3.2).toFixed(1), o = (0.18+r()*0.6).toFixed(2), tw = r()<0.15;
+      out += '<circle cx="' + (r()*100).toFixed(2) + '%" cy="' + (r()*100).toFixed(2) + '%" r="' + sz + '" fill="#fff" opacity="' + o + '"' +
+        (tw ? ' style="filter:drop-shadow(0 0 5px rgba(255,255,255,.8))"' : '') + '/>';
+    }
+    svg.innerHTML = out;
+  })();
+
+  /* ───── nav scroll state + mobile toggle ───── */
+  const nav = document.getElementById('nav');
+  const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 30);
+  window.addEventListener('scroll', onScroll, {passive:true}); onScroll();
+
+  const links = document.getElementById('navlinks');
+  document.getElementById('navtoggle').addEventListener('click', () => links.classList.toggle('show'));
+  links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => links.classList.remove('show')));
+
+  /* active section highlight */
+  const navAs = [...links.querySelectorAll('a')];
+  const secs = navAs.map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean);
+  const spy = new IntersectionObserver(es => {
+    es.forEach(e => {
+      if (e.isIntersecting) {
+        const id = '#' + e.target.id;
+        navAs.forEach(a => a.classList.toggle('active', a.getAttribute('href') === id));
+      }
+    });
+  }, {rootMargin:'-45% 0px -50% 0px'});
+  secs.forEach(s => spy.observe(s));
+
+  /* reveal on scroll */
+  const rev = new IntersectionObserver(es => {
+    es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); rev.unobserve(e.target); } });
+  }, {rootMargin:'0px 0px -10% 0px'});
+  document.querySelectorAll('.reveal').forEach(el => rev.observe(el));
+</script>
+</body>
+</html>
